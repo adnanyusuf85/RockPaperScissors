@@ -4,10 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <script src="script.js"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div id="container">
+        <p class="fs-6">Rock, Paper, Scissors</p>
+        <p class="fs-1">Developed by Adnan Yusuf</p>
+
+        <div id="arena" class="mt-80">
+            <div>
+                <p class="fs-3">Player 1</p>
+                <p id="humanscore" class="fs-7 score text-left">0</p>
+            </div>
+
+            <div id="referee-section" class="text-center">
+                <p class="fs-5">Round <span id="round-number">0</span></p>
+                <p id="referee-messages"class="fs-1">Choose your weapon!</p>
+            </div>
+          
+            <div>
+                <p class="fs-3">Computer</p>
+                <p id="computerscore" class="fs-7 score text-right">0</p>
+            </div>        
+        </div>
+
+        <div id="draw-area" class="mt-128">
+            <div id="weapon-selection">
+                <button id="humans-rock" class="weapon-button fs-3">Rock</button>
+                <button id="humans-paper" class="weapon-button fs-3">Paper</button>
+                <button id="humans-scissors" class="weapon-button fs-3">Scissors</button>
+            </div>
+
+            <div>
+                <button id="computer-weapon" class="weapon-button fs-3 noclick" >Random</button>
+            </div>
+        </div>
+
+
+
+    </div>
 </body>
 </html>

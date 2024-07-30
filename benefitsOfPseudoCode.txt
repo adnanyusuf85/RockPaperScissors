@@ -1,0 +1,7 @@
+These are benefits I experienced after I started coding after first making the pseudocode:
+
+(a) I had very good variable names and function names. When starting with code, usually, the focus is on seeing if the logic works or not, if the syntax works or not, this leads to less delibration on variable and function names and makes it a pain to fix it later.
+
+(b) I clearly knew where I was going. So I could focus on the syntax alone, and not alot on logic.
+
+(c) Sufficiently confident my logic would work, therefore did not continuoulsy have to run snippets and get distracted between initial coding and debugging

@@ -7,16 +7,6 @@ const itemsList = ["Rock", "Paper", "Scissors"];
 
 userKey = null;
 
-welcomeMessage = 
-    "Welcome to the Rock, Paper, Scissors game!\n" +
-    "You will play a game of 5 rounds against the mighty computer.\n"+
-    "Ties will result in repeat rounds, and the whoever wins maximum rounds wins. " +
-    "Hit the OK key when you are ready";
-
-while (userKey == null)
-{
-    userKey = prompt(welcomeMessage);
-}
 
 // Initialize game variable
 let completedNumberOfRounds = 0;
@@ -24,8 +14,28 @@ let computerScore = 0;
 let humanScore = 0;
 const TOTALROUNDS = 5;
 
-while (completedNumberOfRounds < TOTALROUNDS)
+
+document.getElementById("humans-rock").addEventListener('click', (event)=>humanSelection(event,0));
+document.getElementById("humans-paper").addEventListener('click', (event)=>humanSelection(event,1));
+document.getElementById("humans-scissors").addEventListener('click', (event)=>humanSelection(event,2));
+
+
+function humanSelection(event,selection)
 {
+    document.getElementById(event.srcElement.id).classList.add("selected-weapon");
+    let humanChoice = selection;
+    document.getElementById("referee-messages").textContent = "Now wait while the computer selects a weapon...";
+    let computerChoice = getComputerChoice();
+    document.getElementById("computer-weapon").textContent = itemsList[computerChoice];
+    
+}
+
+
+function Initialize()
+{
+
+}
+/*
     let isHumanWinner = false;
     let humanChoice = getHumanChoice();
     let computerChoice = getComputerChoice();
@@ -54,8 +64,9 @@ while (completedNumberOfRounds < TOTALROUNDS)
     }
 
     printScore(humanScore, computerScore, completedNumberOfRounds);
-}
-declareWinner(humanScore, computerScore);
+
+    declareWinner(humanScore, computerScore);
+*/
 
 function playGame(humanChoice, computerChoice)
 {
@@ -99,7 +110,8 @@ function playGame(humanChoice, computerChoice)
 
 function printScore(humanScore, computerScore, completedNumberOfRounds)
 {
-    console.log("Your Score: " + humanScore + "/" + completedNumberOfRounds + ", Computer Score: " + computerScore + "/" + completedNumberOfRounds);
+    document.getElementById("humanscore").textContent = humanScore;
+    document.getElementById("computerscore").textContent = computerScore;
 }
 
 function showChoicesMessage(humanChoice, computerChoice)
