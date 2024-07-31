@@ -15,60 +15,122 @@ let humanScore = 0;
 const TOTALROUNDS = 5;
 
 
-document.getElementById("humans-rock").addEventListener('click', (event)=>humanSelection(event,0));
-document.getElementById("humans-paper").addEventListener('click', (event)=>humanSelection(event,1));
-document.getElementById("humans-scissors").addEventListener('click', (event)=>humanSelection(event,2));
+const rockButton = document.getElementById("humans-rock");
+const paperButton = document.getElementById("humans-paper");
+const scissorsButton = document.getElementById("humans-scissors");
+const humanWeapons = [rockButton,paperButton,scissorsButton];
+const humanScoreDisplay = document.getElementById("humanscore");
+const computerScoreDisplay = document.getElementById("computerscore");
+const computerSelection = document.getElementById("computer-weapon"); 
+const roundNumber = document.getElementById("round-number");
+const refereeMessages = document.getElementById("referee-messages");
+const restartButton = document.getElementById("reset-game");
+
+rockButton.addEventListener('click', (event)=>playRound(event,0));
+paperButton.addEventListener('click', (event)=>playRound(event,1));
+scissorsButton.addEventListener('click', (event)=>playRound(event,2));
+
+restartButton.addEventListener('click', initializeGame);
 
 
-function humanSelection(event,selection)
+initializeGame();
+
+function initializeGame()
 {
-    document.getElementById(event.srcElement.id).classList.add("selected-weapon");
-    let humanChoice = selection;
-    document.getElementById("referee-messages").textContent = "Now wait while the computer selects a weapon...";
-    let computerChoice = getComputerChoice();
-    document.getElementById("computer-weapon").textContent = itemsList[computerChoice];
-    
+    informUserToPlay();
+    completedNumberOfRounds = 0;
+    computerScore = 0;
+    humanScore = 0;
+    updateScoreMessages(humanScore,computerScore);
+    updateRoundNumberMessage(completedNumberOfRounds);
 }
 
-
-function Initialize()
+function playRound(event, humanSelectionId)
 {
+    updateRefereeMessage(`You selected ${itemsList[humanSelectionId]},`);
+    let computerChoiceId = getComputerChoice();
+    updateComputerChoiceMessage(computerChoiceId);
 
-}
-/*
-    let isHumanWinner = false;
-    let humanChoice = getHumanChoice();
-    let computerChoice = getComputerChoice();
+    updateRefereeMessage(`You selected ${itemsList[humanSelectionId]}, 
+        and the computer selected ${itemsList[computerChoiceId]}`);    
 
-    completedNumberOfRounds += 1;
-
-    showChoicesMessage(humanChoice, computerChoice);
-
-    if (humanChoice == computerChoice)
+    if(humanSelectionId == computerChoiceId)
     {
-        console.log("Its a tie.");
-        completedNumberOfRounds -= 1;
+        updateRefereeMessage(`Oh gosh! Its a tie`);
+        return;
+    }
+
+    if(isHumanWinner(humanSelectionId,computerChoiceId))
+    {
+        humanScore++;
     }
     else
     {
-        isHumanWinner = playGame(humanChoice, computerChoice);
-
-        if (isHumanWinner)
-        {
-            humanScore += 1;
-        }
-        else
-        {
-            computerScore += 1;
-        }
+        computerScore++;
     }
+    
+    updateScoreMessages(humanScore,computerScore);
 
-    printScore(humanScore, computerScore, completedNumberOfRounds);
+    completedNumberOfRounds++;
 
-    declareWinner(humanScore, computerScore);
-*/
+    updateRoundNumberMessage(completedNumberOfRounds);
 
-function playGame(humanChoice, computerChoice)
+    
+    if (completedNumberOfRounds == TOTALROUNDS)
+    {
+        disableAllWeapons(humanWeapons);
+        declareWinner(humanScore, computerScore);
+        return;
+    }
+    resetAllWeapons();
+    informUserToPlay();
+}
+
+function informUserToPlay()
+{
+    updateRefereeMessage("Select a weapon to play");
+}
+function updateScoreMessages(humanScore, computerScore)
+{
+    humanScoreDisplay.textContent = humanScore;
+    computerScoreDisplay.textContent = computerScore;
+}
+
+function updateComputerChoiceMessage(id)
+{
+    computerSelection.textContent = itemsList[id];
+}
+
+function updateRefereeMessage(message)
+{
+    refereeMessages.textContent = message;
+}
+
+function resetAllWeapons()
+{
+    humanWeapons.forEach(
+        (weapon)=>{
+            weapon.classList.remove("selected-weapon");
+        }
+    );
+}
+
+function updateRoundNumberMessage(message)
+{
+    roundNumber.textContent = message;
+}
+
+function disableAllWeapons(weapons)
+{
+    weapons.forEach(
+        (weapon)=>{
+            weapon.disabled = true;
+        }
+    );
+}
+
+
+function isHumanWinner(humanChoice, computerChoice)
 {
     if (humanChoice == SCISSORS & computerChoice == PAPER)
     {
@@ -134,11 +196,11 @@ function declareWinner(humanScore, computerScore)
 {
     if (humanScore > computerScore)
     {
-        console.log("Congratulations you won!");
+        updateRefereeMessage("You won!")
     }
 
     else
     {
-        console.log("Unfortunately, the computer has won!");
+        updateRefereeMessage("You lost, the mightly computer has won!");
     }
 }
