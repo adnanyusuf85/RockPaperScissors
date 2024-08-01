@@ -63,10 +63,12 @@ function playRound(event, humanSelectionId)
     if(isHumanWinner(humanSelectionId,computerChoiceId))
     {
         humanScore++;
+        updateRefereeMessage("You won this round");
     }
     else
     {
         computerScore++;
+        updateRefereeMessage("The computer won this round");
     }
     
     updateScoreMessages(humanScore,computerScore);
@@ -83,7 +85,7 @@ function playRound(event, humanSelectionId)
         return;
     }
     resetAllWeapons();
-    informUserToPlay();
+    //informUserToPlay();
 }
 
 function informUserToPlay()
